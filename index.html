@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Finance Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- LOGIN PAGE -->
+<div id="login-page" class="page">
+  <div class="login-box">
+    <div class="logo-circle"></div>
+    <input type="text" id="login-username" placeholder="USERNAME" class="input" required />
+    <input type="password" id="login-password" placeholder="PASSWORD" class="input" required />
+    <button class="btn" onclick="handleLogin()">Login</button>
+  </div>
+</div>
+
+  <!-- HOMEPAGE -->
+  <div id="homepage" class="page hidden">
+    <div class="overview">
+      <div class="balance-label">TOTAL BALANCE</div>
+      <div id="total-balance">49,976,633,128</div>
+    </div>
+    <div class="action-buttons">
+  <button onclick="openForm('expense')">
+    <span class="btn-symbol">-</span>
+    <span class="btn-label">Expenses</span>
+  </button>
+  <button onclick="openForm('income')">
+    <span class="btn-symbol">+</span>
+    <span class="btn-label">Income</span>
+  </button>
+  <button>
+    <span class="btn-symbol">📊</span>
+    <span class="btn-label">Daily P&L</span>
+  </button>
+</div>
+    <div class="bank-list" id="bank-list">
+      <!-- Example -->
+      <div class="bank-item" onclick="openBankDetail('BCA')">BCA <span>1,234,234,323,666</span></div>
+    </div>
+  </div>
+
+  <!-- ADD INCOME/EXPENSE -->
+  <div id="form-page" class="page hidden">
+    <div class="form-box">
+      <input type="text" id="detail" placeholder="Detail" class="form-input" />
+      <input type="number" id="amount" placeholder="Amount" class="form-input" />
+      <input type="text" id="bank" placeholder="Bank" class="form-input" />
+      <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
+      <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
+    </div>
+  </div>
+
+
+  <!-- BANK DETAIL -->
+  <div id="bank-detail-page" class="page hidden">
+  <div class="bank-detail-header">
+    <div class="bank-name" id="bank-name">BCA</div>
+    <div class="balance-wrapper">
+      <div class="label">BALANCE</div>
+      <div class="amount" id="bank-total">1,234,234,323,666</div>
+    </div>
+  </div>
+
+  <table class="bank-detail-table">
+    <thead>
+      <tr>
+        <th>DETAIL</th>
+        <th>IN</th>
+        <th>OUT</th>
+        <th>BALANCE</th>
+      </tr>
+    </thead>
+    <tbody id="bank-detail-body">
+      <!-- Filled by JS -->
+    </tbody>
+  </table>
+  <button class="return-btn" onclick="returnToHomepage()">Return to Homepage</button>
+</div>
+
+  <script src="script.js"></script>
+</body>
+</html>
