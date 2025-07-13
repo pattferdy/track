@@ -44,7 +44,7 @@ async function handleLogin() {
   overlay.classList.remove('hidden');
 
   try {
-    const userSnap = await get(child(ref(db), `users/${username}/password));
+    const userSnap = await get(child(ref(db), `users/${username}/password`));
 
     if (!userSnap.exists() || userSnap.val() !== password) {
       overlay.classList.add('hidden');
@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const savedUser = localStorage.getItem('loggedInUser');
   if (savedUser) {
     try {
-      const userSnap = await get(child(ref(db), `users/${savedUser}/password));
+      const userSnap = await get(child(ref(db), `users/${savedUser}/password`));
       if (userSnap.exists()) {
         currentUser = savedUser;
         document.getElementById('login-page').classList.add('hidden');
@@ -173,8 +173,8 @@ async function submitForm() {
   if (!detail || isNaN(amount) || !bank) return alert('Fill all fields');
 
   try {
-    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks));
-    const historySnap = await get(child(ref(db), `users/${currentUser}/history));
+    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
+    const historySnap = await get(child(ref(db), `users/${currentUser}/history`));
 
     let banks = bankSnap.exists() ? bankSnap.val() : {};
     let history = historySnap.exists() ? historySnap.val() : {};
@@ -211,7 +211,7 @@ async function submitForm() {
 
 async function loadBankData() {
   try {
-    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks));
+    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
     const banks = bankSnap.exists() ? bankSnap.val() : {};
     const list = document.getElementById('bank-list');
     list.innerHTML = '';
@@ -245,7 +245,7 @@ async function openBankDetail(bankName) {
   document.getElementById('bank-name').textContent = bankName;
 
   try {
-    const historySnap = await get(child(ref(db), `users/${currentUser}/history/${bankName}));
+    const historySnap = await get(child(ref(db), `users/${currentUser}/history/${bankName}`));
     const entries = historySnap.exists() ? historySnap.val() : [];
     const tbody = document.getElementById('bank-detail-body');
     tbody.innerHTML = '';
@@ -288,7 +288,7 @@ async function deleteTransaction(bankName, index) {
   if (!confirm("Delete this transaction?")) return;
 
   try {
-    const historySnap = await get(child(ref(db), `users/${currentUser}/history));
+    const historySnap = await get(child(ref(db), `users/${currentUser}/history`));
     const history = historySnap.exists() ? historySnap.val() : {};
 
     if (!history[bankName]) return;
@@ -300,7 +300,7 @@ async function deleteTransaction(bankName, index) {
       entry.balance = balance;
     });
 
-    const banks = await get(child(ref(db), `users/${currentUser}/banks)).then(snap => snap.val() || {});
+    const banks = await get(child(ref(db), `users/${currentUser}/banks`)).then(snap => snap.val() || {});
     banks[bankName] = balance;
 
     await set(ref(db, users/${currentUser}/history), history);
@@ -321,8 +321,8 @@ async function deleteBank(event, bankName) {
   if (!confirm(Are you sure you want to delete ${bankName}?)) return;
 
   try {
-    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks));
-    const historySnap = await get(child(ref(db), `users/${currentUser}/history));
+    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
+    const historySnap = await get(child(ref(db), `users/${currentUser}/history`));
 
     const banks = bankSnap.exists() ? bankSnap.val() : {};
     const history = historySnap.exists() ? historySnap.val() : {};
@@ -369,7 +369,7 @@ async function updateGainDisplay(overrideBenchmark = null) {
   try {
     let benchmark = overrideBenchmark;
     if (benchmark === null) {
-      const snap = await get(child(ref(db), users/${currentUser}/benchmark));
+      const snap = await get(child(ref(db), `users/${currentUser}/benchmark`));
       if (!snap.exists()) return; // No benchmark set yet
       benchmark = snap.val();
     }
