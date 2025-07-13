@@ -283,3 +283,11 @@ function updateTotalBalance() {
   document.getElementById('total-balance').textContent = total.toLocaleString();
 }
 
+window.openForm = openForm;
+window.closeForm = closeForm;
+window.submitForm = submitForm;
+window.openBankDetail = openBankDetail;
+window.deleteTransaction = deleteTransaction;
+window.deleteBank = deleteBank;
+window.returnToHomepage = returnToHomepage;
+
