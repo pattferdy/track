@@ -20,8 +20,10 @@
   <!-- HOMEPAGE -->
   <div id="homepage" class="page hidden">
   <div class="overview">
+    <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
   <div class="profile-wrapper">
-    <img id="profile-pic" src="..." />
+  <img id="profile-pic" src="default.jpg" alt="Profile" onclick="document.getElementById('profile-upload').click()" />
+  <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
   <div class="balance-info">
     <div class="balance-label">TOTAL BALANCE</div>
     <div id="total-balance">0</div>
