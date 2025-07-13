@@ -173,7 +173,6 @@ async function loadBankData() {
       list.appendChild(item);
     }
     updateTotalBalance();
-  }  
   } catch (error) {
     console.error("Load bank error:", error);
   }
