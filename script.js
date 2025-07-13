@@ -33,33 +33,29 @@ async function handleLogin() {
   const overlay = document.getElementById('loading-overlay');
   overlay.classList.remove('hidden'); // 🟢 Show loader
 
-  let success = false;
-
   try {
     const userSnap = await get(child(ref(db), `users/${username}/password`));
 
     if (!userSnap.exists() || userSnap.val() !== password) {
       alert("Invalid username or password.");
-      return; // Stop here, no success
+      return;
     }
 
-    // ✅ Login successful
+    // ✅ Login success — set state and load data
     currentUser = username;
     localStorage.setItem('loggedInUser', username);
-    success = true;
+
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('homepage').classList.remove('hidden');
+    await loadBankData();
+    updateTotalBalance();
+    loadProfilePic();
+
   } catch (error) {
     console.error("Login error:", error);
     alert("Error logging in.");
   } finally {
-    overlay.classList.add('hidden'); // 🛑 Always hide loader
-
-    if (success) {
-      document.getElementById('login-page').classList.add('hidden');
-      document.getElementById('homepage').classList.remove('hidden');
-      await loadBankData();
-      updateTotalBalance();
-      loadProfilePic();
-    }
+    overlay.classList.add('hidden'); // 🛑 Hide loader
   }
 }
 
