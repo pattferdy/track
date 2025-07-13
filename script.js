@@ -383,10 +383,12 @@ function updateTotalBalance() {
 
 function confirmBenchmarkPopup() {
   document.getElementById('benchmark-popup').classList.remove('hidden');
+  document.body.classList.add('lock-scroll');
 }
 
 function closePopup() {
   document.getElementById('benchmark-popup').classList.add('hidden');
+  document.body.classList.remove('lock-scroll');
 }
 
 function logout() {
