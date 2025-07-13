@@ -8,93 +8,100 @@
 </head>
 <body>
   <!-- LOGIN PAGE -->
-<div id="login-page" class="page">
-  <div class="login-box">
-    <div class="logo-circle"></div>
-    <input type="text" id="login-username" name="username" placeholder="USERNAME" class="input" autocapitalize="none" />
-    <input type="password" id="login-password" placeholder="PASSWORD" class="input" required />
-    <button class="btn">Login</button>
-  </div>
-</div>
-
-  <!-- HOMEPAGE -->
-  <div id="homepage" class="page hidden">
-  <div class="overview">
-  <div class="profile-wrapper">
-  <img id="profile-pic" src="default.jpg" alt="Profile" onclick="document.getElementById('profile-upload').click()" />
-  <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
-  <div class="balance-info">
-    <div class="balance-label">TOTAL BALANCE</div>
-    <div id="total-balance">0</div>
-    <button onclick="logout()" class="logout-btn">Logout</button>
-  </div>
-  </div>
-</div>
-
-   <div class="action-buttons">
-  <button onclick="openForm('expense')">
-    <span class="btn-symbol">-</span>
-    <span class="btn-label">Expenses</span>
-  </button>
-  <button onclick="openForm('income')">
-    <span class="btn-symbol">+</span>
-    <span class="btn-label">Income</span>
-  </button>
-  <button onclick="openForm('benchmark')">
-    <span class="btn-symbol" id="gain-display">+0%</span>
-    <span class="btn-label">Daily P&L</span>
-  </button>
-</div>
-
-<div class="bank-list" id="bank-list">
-  <!-- Example -->
-  <div class="bank-item" onclick="openBankDetail('BCA')">BCA <span>1,234,234,323,666</span></div>
-</div>
-
-<!-- ADD INCOME/EXPENSE -->
-<div id="form-page" class="page hidden">
-  <div class="form-box">
-    <input type="text" id="detail" placeholder="Detail" class="form-input" />
-    <input type="text" id="amount" placeholder="Amount" class="form-input" />
-    <input type="text" id="bank" placeholder="Bank" class="form-input" />
-    <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
-    <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
-  </div>
-</div>
-
-
-  <!-- BANK DETAIL -->
-  <div id="bank-detail-page" class="page hidden">
-  <div class="bank-detail-header">
-    <div class="bank-name" id="bank-name">BCA</div>
-    <div class="balance-wrapper">
-      <div class="label">BALANCE</div>
-      <div class="amount" id="bank-total"></div>
+  <div id="login-page" class="page">
+    <div class="login-box">
+      <div class="logo-circle"></div>
+      <input type="text" id="login-username" name="username" placeholder="USERNAME" class="input" autocapitalize="none" />
+      <input type="password" id="login-password" placeholder="PASSWORD" class="input" required />
+      <button class="btn">Login</button>
     </div>
   </div>
 
-  <table class="bank-detail-table">
-    <thead>
-      <tr>
-        <th>DETAIL</th>
-        <th>IN</th>
-        <th>OUT</th>
-        <th>BALANCE</th>
-      </tr>
-    </thead>
-    <tbody id="bank-detail-body">
-      <!-- Filled by JS -->
-    </tbody>
-  </table>
-  <button class="return-btn" onclick="returnToHomepage()">Return to Homepage</button>
-</div>
+  <!-- HOMEPAGE -->
+  <div id="homepage" class="page hidden">
+    <div class="overview">
+      <div class="profile-wrapper">
+        <img id="profile-pic" src="default.jpg" alt="Profile" onclick="document.getElementById('profile-upload').click()" />
+        <input type="file" id="profile-upload" accept="image/*" style="display: none;" />
+        <div class="balance-info">
+          <div class="balance-label">TOTAL BALANCE</div>
+          <div id="total-balance">0</div>
+          <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+      </div>
+    </div>
 
-<!-- Full Page Loading Overlay -->
-<div id="loading-overlay" class="hidden">
-  <div class="loader"></div>
-</div>
-    
-<script type="module" src="script.js"></script>
+    <div class="action-buttons">
+      <button onclick="openForm('expense')">
+        <span class="btn-symbol">-</span>
+        <span class="btn-label">Expenses</span>
+      </button>
+      <button onclick="openForm('income')">
+        <span class="btn-symbol">+</span>
+        <span class="btn-label">Income</span>
+      </button>
+      <button onclick="openForm('benchmark')">
+        <span class="btn-symbol" id="gain-display">+0%</span>
+        <span class="btn-label">Daily P&L</span>
+      </button>
+    </div>
 
+    <div class="bank-list" id="bank-list">
+      <div class="bank-item" onclick="openBankDetail('BCA')">BCA <span>1,234,234,323,666</span></div>
+    </div>
+  </div>
+
+  <!-- SHARED FORM PAGE -->
+  <div id="form-page" class="page hidden">
+    <div class="form-box">
+      <!-- Benchmark confirmation content -->
+      <div id="benchmark-confirm" class="hidden">
+        <p>Set current total as benchmark?</p>
+        <button class="form-submit-btn" onclick="setBenchmark()">Yes</button>
+        <button class="form-exit-btn" onclick="closeForm()">Cancel</button>
+      </div>
+
+      <!-- Income/Expense form -->
+      <div id="transaction-form">
+        <input type="text" id="detail" placeholder="Detail" class="form-input" />
+        <input type="text" id="amount" placeholder="Amount" class="form-input" />
+        <input type="text" id="bank" placeholder="Bank" class="form-input" />
+        <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
+        <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANK DETAIL -->
+  <div id="bank-detail-page" class="page hidden">
+    <div class="bank-detail-header">
+      <div class="bank-name" id="bank-name">BCA</div>
+      <div class="balance-wrapper">
+        <div class="label">BALANCE</div>
+        <div class="amount" id="bank-total"></div>
+      </div>
+    </div>
+    <table class="bank-detail-table">
+      <thead>
+        <tr>
+          <th>DETAIL</th>
+          <th>IN</th>
+          <th>OUT</th>
+          <th>BALANCE</th>
+        </tr>
+      </thead>
+      <tbody id="bank-detail-body">
+        <!-- Filled by JS -->
+      </tbody>
+    </table>
+    <button class="return-btn" onclick="returnToHomepage()">Return to Homepage</button>
+  </div>
+
+  <!-- LOADING OVERLAY -->
+  <div id="loading-overlay" class="hidden">
+    <div class="loader"></div>
+  </div>
+
+  <script type="module" src="script.js"></script>
 </body>
 </html>
