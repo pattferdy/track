@@ -665,3 +665,49 @@ body.lock-scroll {
 .delete-transaction-btn:hover {
   color: #ff4d4d;
 }
+
+#benchmark-confirm {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  text-align: center;
+}
+
+#benchmark-confirm p {
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 10px;
+}
+
+#benchmark-confirm button {
+  width: 259px;
+  height: 40px;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+#benchmark-confirm .form-submit-btn {
+  background: #28a745; /* green */
+  color: white;
+  border: none;
+}
+
+#benchmark-confirm .form-submit-btn:hover {
+  background: #218838;
+}
+
+#benchmark-confirm .form-exit-btn {
+  background: #dc3545; /* red */
+  color: white;
+  border: none;
+}
+
+#benchmark-confirm .form-exit-btn:hover {
+  background: #c82333;
+}
