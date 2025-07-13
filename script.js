@@ -49,9 +49,8 @@ async function handleLogin() {
 
 document.addEventListener("DOMContentLoaded", () => {
   const loginBtn = document.querySelector('.btn');
-  if (loginBtn) {
-    loginBtn.addEventListener('click', handleLogin);
-  }
+  loginBtn?.addEventListener('click', handleLogin);
+});
 
   const amountInput = document.getElementById('amount');
   if (amountInput) {
