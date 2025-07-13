@@ -41,19 +41,10 @@
     <span class="btn-symbol">+</span>
     <span class="btn-label">Income</span>
   </button>
-  <button onclick="confirmBenchmarkPopup()">
+  <button onclick="openBenchmarkPopup()">
     <span class="btn-symbol" id="gain-display">+0%</span>
     <span class="btn-label">Daily P&L</span>
   </button>
-</div>
-
-<!-- Daily P&L Benchmark Confirmation Popup -->
-<div id="benchmark-popup" class="popup hidden">
-  <div class="popup-content">
-    <p>Set current total as benchmark?</p>
-    <button onclick="setBenchmark()">Yes</button>
-    <button onclick="closePopup()">Cancel</button>
-  </div>
 </div>
 
 <div class="bank-list" id="bank-list">
