@@ -23,7 +23,6 @@ const app = initializeApp(firebaseConfig);
   window.ref = ref;
   window.child = child;
   window.set = set;
- }
 
 let currentUser = null;
 
