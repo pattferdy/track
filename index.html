@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
   <title>Finance Tracker</title>
   <link rel="stylesheet" href="style.css" />
 </head>
@@ -11,7 +11,7 @@
 <div id="login-page" class="page">
   <div class="login-box">
     <div class="logo-circle"></div>
-    <input type="text" id="login-username" placeholder="USERNAME" class="input" required />
+    <input type="text" id="login-username" name="username" placeholder="USERNAME" class="input" autocapitalize="none" />
     <input type="password" id="login-password" placeholder="PASSWORD" class="input" required />
     <button class="btn" onclick="handleLogin()">Login</button>
   </div>
@@ -19,10 +19,16 @@
 
   <!-- HOMEPAGE -->
   <div id="homepage" class="page hidden">
-    <div class="overview">
-      <div class="balance-label">TOTAL BALANCE</div>
-      <div id="total-balance">49,976,633,128</div>
-    </div>
+  <div class="overview">
+  <div class="profile-wrapper">
+    <img id="profile-pic" src="..." />
+  <div class="balance-info">
+    <div class="balance-label">TOTAL BALANCE</div>
+    <div id="total-balance">0</div>
+  </div>
+  </div>
+</div>
+
     <div class="action-buttons">
   <button onclick="openForm('expense')">
     <span class="btn-symbol">-</span>
@@ -43,16 +49,16 @@
     </div>
   </div>
 
-  <!-- ADD INCOME/EXPENSE -->
-  <div id="form-page" class="page hidden">
-    <div class="form-box">
-      <input type="text" id="detail" placeholder="Detail" class="form-input" />
-      <input type="number" id="amount" placeholder="Amount" class="form-input" />
-      <input type="text" id="bank" placeholder="Bank" class="form-input" />
-      <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
-      <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
-    </div>
+<!-- ADD INCOME/EXPENSE -->
+<div id="form-page" class="page hidden">
+  <div class="form-box">
+    <input type="text" id="detail" placeholder="Detail" class="form-input" />
+    <input type="text" id="amount" placeholder="Amount" class="form-input" />
+    <input type="text" id="bank" placeholder="Bank" class="form-input" />
+    <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
+    <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
   </div>
+</div>
 
 
   <!-- BANK DETAIL -->
@@ -61,7 +67,7 @@
     <div class="bank-name" id="bank-name">BCA</div>
     <div class="balance-wrapper">
       <div class="label">BALANCE</div>
-      <div class="amount" id="bank-total">1,234,234,323,666</div>
+      <div class="amount" id="bank-total"></div>
     </div>
   </div>
 
