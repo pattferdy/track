@@ -1,28 +1,28 @@
 // ✅ Firebase setup (make sure this is in your HTML too)
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
-  import { getDatabase, ref, child, get, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+import { getDatabase, ref, child, get, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyB0KEuTX22TijLqgDdeS_kxyrzIZs9kc8E",
-    authDomain: "budgeting-id.firebaseapp.com",
-    projectId: "budgeting-id",
-    storageBucket: "budgeting-id.firebasestorage.app",
-    messagingSenderId: "710126347620",
-    appId: "1:710126347620:web:e2e4f2f5c7a489d6d78671",
-    measurementId: "G-9EXTLK9LCD"
-  };
+  apiKey: "AIzaSyB0KEuTX22TijLqgDdeS_kxyrzIZs9kc8E",
+  authDomain: "budgeting-id.firebaseapp.com",
+  projectId: "budgeting-id",
+  storageBucket: "budgeting-id.firebasestorage.app",
+  messagingSenderId: "710126347620",
+  appId: "1:710126347620:web:e2e4f2f5c7a489d6d78671",
+  measurementId: "G-9EXTLK9LCD"
+};
 
 const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-  const db = getDatabase(app);
+const analytics = getAnalytics(app);
+const db = getDatabase(app);
 
-  // Make the database available globally
-  window.db = db;
-  window.get = get;
-  window.ref = ref;
-  window.child = child;
-  window.set = set;
+// Make the database available globally
+window.db = db;
+window.get = get;
+window.ref = ref;
+window.child = child;
+window.set = set;
 
 let currentUser = null;
 
@@ -41,6 +41,7 @@ async function handleLogin() {
     }
 
     currentUser = username;
+    localStorage.setItem('loggedInUser', username);
     document.getElementById('login-page').classList.add('hidden');
     document.getElementById('homepage').classList.remove('hidden');
     await loadBankData();
@@ -54,7 +55,17 @@ async function handleLogin() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
+  const savedUser = localStorage.getItem('loggedInUser');
+  if (savedUser) {
+    currentUser = savedUser;
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('homepage').classList.remove('hidden');
+    await loadBankData();
+    updateTotalBalance();
+    loadProfilePic();
+  }
+
   const loginBtn = document.querySelector('.btn');
   if (loginBtn) loginBtn.addEventListener('click', handleLogin);
 
@@ -85,12 +96,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-function loadProfilePic() {
-  get(child(ref(db), `users/${currentUser}/profilePic`)).then(snap => {
-    if (snap.exists()) {
-      document.getElementById('profile-pic').src = snap.val();
-    }
-  }).catch(err => console.error("Profile pic error:", err));
+function logout() {
+  localStorage.removeItem('loggedInUser');
+  currentUser = null;
+  document.getElementById('homepage').classList.add('hidden');
+  document.getElementById('form-page').classList.add('hidden');
+  document.getElementById('bank-detail-page').classList.add('hidden');
+  document.getElementById('login-page').classList.remove('hidden');
 }
 
 function openForm(type) {
