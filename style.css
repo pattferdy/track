@@ -258,6 +258,24 @@ body {
   margin-bottom: 20px;
 }
 
+.logout-btn {
+  padding: 6px;
+  background: transparent;
+  border: 1px solid #e74c3c;
+  margin-top: 10px;
+  color: #e74c3c;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 10px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background: #e74c3c;
+  color: white;
+}
+
 /* HOMEPAGE BALANCE OVERVIEW */
 .overview {
   display: flex;
