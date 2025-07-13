@@ -265,12 +265,6 @@ async function openBankDetail(bankName) {
     `;
       fragment.appendChild(row);
     });
-
-    tbody.appendChild(fragment);
-    document.getElementById('bank-total').textContent =
-      entries.length > 0 ? entries[entries.length - 1].balance.toLocaleString() : '0';
-    }
-  });
 }
 
 async function deleteTransaction(bankName, index) {
