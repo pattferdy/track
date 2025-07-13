@@ -46,11 +46,16 @@ body {
   color: var(--text-color);
 }
 
+body.lock-scroll {
+  overflow: hidden;
+}
+
 .page {
   display: none;
   height: 100vh;
   padding: 20px;
   z-index: 1; /* base level */
+  overflow: hidden;
 }
 
 .page:not(.hidden) {
