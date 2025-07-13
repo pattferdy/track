@@ -258,7 +258,11 @@ async function openBankDetail(bankName) {
         <td><em>${entry.detail}</em></td>
         <td>${inCol}</td>
         <td>${outCol}</td>
-      `;
+        <td>
+          ${entry.balance.toLocaleString()}
+          <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
+        </td>
+    `;
       fragment.appendChild(row);
     });
 
