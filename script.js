@@ -1,6 +1,7 @@
 // ✅ Firebase setup (make sure this is in your HTML too)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
+  import { getDatabase, ref, child, get, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyB0KEuTX22TijLqgDdeS_kxyrzIZs9kc8E",
@@ -13,7 +14,16 @@ const firebaseConfig = {
   };
 
 const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+  const analytics = getAnalytics(app);
+  const db = getDatabase(app);
+
+  // Make the database available globally
+  window.db = db;
+  window.get = get;
+  window.ref = ref;
+  window.child = child;
+  window.set = set;
+ }
 
 let currentUser = null;
 
