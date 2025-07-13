@@ -33,27 +33,36 @@ async function handleLogin() {
   const overlay = document.getElementById('loading-overlay');
   overlay.classList.remove('hidden'); // 🟢 Show loader
 
+  let success = false;
+
   try {
     const userSnap = await get(child(ref(db), `users/${username}/password`));
+
     if (!userSnap.exists() || userSnap.val() !== password) {
       alert("Invalid username or password.");
-      return;
+      return; // Stop here, no success
     }
 
+    // ✅ Login successful
     currentUser = username;
     localStorage.setItem('loggedInUser', username);
-    document.getElementById('login-page').classList.add('hidden');
-    document.getElementById('homepage').classList.remove('hidden');
-    await loadBankData();
-    updateTotalBalance();
-    loadProfilePic();
+    success = true;
   } catch (error) {
     console.error("Login error:", error);
     alert("Error logging in.");
   } finally {
-    overlay.classList.add('hidden'); // 🛑 Hide loader
+    overlay.classList.add('hidden'); // 🛑 Always hide loader
+
+    if (success) {
+      document.getElementById('login-page').classList.add('hidden');
+      document.getElementById('homepage').classList.remove('hidden');
+      await loadBankData();
+      updateTotalBalance();
+      loadProfilePic();
+    }
   }
 }
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   const savedUser = localStorage.getItem('loggedInUser');
