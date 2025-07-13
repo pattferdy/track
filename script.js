@@ -6,8 +6,8 @@ const users = {
 let currentUser = null;
 
 function handleLogin() {
-  const username = document.getElementById('login-username').value.trim();
-  const password = document.getElementById('login-password').value.trim();
+  const username = document.getElementById('login-username').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value.trim().toLowerCase();
 
   if (!users[username] || users[username].password !== password) {
     alert("Invalid username or password.");
@@ -43,7 +43,8 @@ function submitForm() {
   const type = document.getElementById('form-page').dataset.type;
   const detail = document.getElementById('detail').value;
   const amount = parseFloat(document.getElementById('amount').value);
-  const bank = document.getElementById('bank').value;
+  const bank = document.getElementById('bank').value.trim().toUpperCase();
+
 
   if (!detail || isNaN(amount) || !bank) return alert('Fill all fields');
 
