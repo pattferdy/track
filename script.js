@@ -265,12 +265,6 @@ async function openBankDetail(bankName) {
     tbody.appendChild(fragment);
     document.getElementById('bank-total').textContent =
       entries.length > 0 ? entries[entries.length - 1].balance.toLocaleString() : '0';
-
-    const deleteWrapper = document.querySelector('.delete-bank-button-wrapper');
-    if (deleteWrapper) {
-      deleteWrapper.innerHTML = `
-        <button class="delete-bank-btn-large" onclick="deleteBank(event, '${bankName}')">✖ Delete Bank</button>
-      `;
     }
   });
 }
