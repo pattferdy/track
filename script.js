@@ -172,6 +172,8 @@ async function loadBankData() {
       `;
       list.appendChild(item);
     }
+    updateTotalBalance();
+  }  
   } catch (error) {
     console.error("Load bank error:", error);
   }
@@ -271,6 +273,7 @@ async function deleteBank(event, bankName) {
 function returnToHomepage() {
   document.getElementById('bank-detail-page').classList.add('hidden');
   document.getElementById('homepage').classList.remove('hidden');
+  updateTotalBalance(); // ✅ Add this here
 }
 
 function updateTotalBalance() {
