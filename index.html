@@ -32,7 +32,7 @@
   </div>
 </div>
 
-    <div class="action-buttons">
+   <div class="action-buttons">
   <button onclick="openForm('expense')">
     <span class="btn-symbol">-</span>
     <span class="btn-label">Expenses</span>
@@ -41,16 +41,25 @@
     <span class="btn-symbol">+</span>
     <span class="btn-label">Income</span>
   </button>
-  <button>
-    <span class="btn-symbol">📊</span>
+  <button onclick="confirmBenchmarkPopup()">
+    <span class="btn-symbol" id="gain-display">+0%</span>
     <span class="btn-label">Daily P&L</span>
   </button>
 </div>
-    <div class="bank-list" id="bank-list">
-      <!-- Example -->
-      <div class="bank-item" onclick="openBankDetail('BCA')">BCA <span>1,234,234,323,666</span></div>
-    </div>
+
+<!-- Daily P&L Benchmark Confirmation Popup -->
+<div id="benchmark-popup" class="popup hidden">
+  <div class="popup-content">
+    <p>Set current total as benchmark?</p>
+    <button onclick="setBenchmark()">Yes</button>
+    <button onclick="closePopup()">Cancel</button>
   </div>
+</div>
+
+<div class="bank-list" id="bank-list">
+  <!-- Example -->
+  <div class="bank-item" onclick="openBankDetail('BCA')">BCA <span>1,234,234,323,666</span></div>
+</div>
 
 <!-- ADD INCOME/EXPENSE -->
 <div id="form-page" class="page hidden">
