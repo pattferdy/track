@@ -23,13 +23,6 @@ body {
   z-index: 1; /* base level */
 }
 
-@media (max-width: 768px) {
-  #homepage {
-    justify-content: flex-start; /* align to top */
-    padding-top: 40px; /* add space from top if needed */
-  }
-}
-
 .page:not(.hidden) {
   display: flex;
   flex-direction: column;
