@@ -1,19 +1,20 @@
 // ✅ Firebase setup (make sure this is in your HTML too)
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
+import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB0KEuTX22TijLqgDdeS_kxyrzIZs9kc8E",
-  authDomain: "budgeting-id.firebaseapp.com",
-  databaseURL: "budgeting-id",
-  projectId: "budgeting-id.firebasestorage.app",
-  storageBucket: "710126347620",
-  messagingSenderId: "1:710126347620:web:e2e4f2f5c7a489d6d78671",
-  appId: "G-9EXTLK9LCD"
-};
+    apiKey: "AIzaSyB0KEuTX22TijLqgDdeS_kxyrzIZs9kc8E",
+    authDomain: "budgeting-id.firebaseapp.com",
+    projectId: "budgeting-id",
+    storageBucket: "budgeting-id.firebasestorage.app",
+    messagingSenderId: "710126347620",
+    appId: "1:710126347620:web:e2e4f2f5c7a489d6d78671",
+    measurementId: "G-9EXTLK9LCD"
+    databaseURL: "https://budgeting-id-default-rtdb.firebaseio.com/"
+  };
 
 const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
+const analytics = getAnalytics(app);
 
 let currentUser = null;
 
