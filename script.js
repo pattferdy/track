@@ -27,7 +27,7 @@ let currentUser = null;
 
 function loadProfilePic() {
   if (!currentUser) return;
-  get(child(ref(db), users/${currentUser}/profilePic))
+  get(child(ref(db), `users/${currentUser}/profilePic`))
     .then(snap => {
       if (snap.exists()) {
         document.getElementById('profile-pic').src = snap.val();
