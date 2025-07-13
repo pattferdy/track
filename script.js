@@ -30,6 +30,9 @@ async function handleLogin() {
   const username = document.getElementById('login-username').value.trim().toLowerCase();
   const password = document.getElementById('login-password').value.trim().toLowerCase();
 
+  const overlay = document.getElementById('loading-overlay');
+  overlay.classList.remove('hidden'); // 🟢 Show loader
+
   try {
     const userSnap = await get(child(ref(db), `users/${username}/password`));
     if (!userSnap.exists() || userSnap.val() !== password) {
@@ -40,12 +43,14 @@ async function handleLogin() {
     currentUser = username;
     document.getElementById('login-page').classList.add('hidden');
     document.getElementById('homepage').classList.remove('hidden');
-    loadBankData();
+    await loadBankData();
     updateTotalBalance();
     loadProfilePic();
   } catch (error) {
     console.error("Login error:", error);
     alert("Error logging in.");
+  } finally {
+    overlay.classList.add('hidden'); // 🛑 Hide loader
   }
 }
 
