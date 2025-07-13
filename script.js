@@ -22,11 +22,15 @@ async function handleLogin() {
   const password = document.getElementById('login-password').value.trim();
 
   try {
-    const snapshot = await firebase.database().ref('users/' + username).once('value');
-    const userData = snapshot.val();
+    const snapshot = await get(child(ref(db), `users/${username}`));
+    if (!snapshot.exists()) {
+      alert("Invalid username.");
+      return;
+    }
 
-    if (!userData || userData.password !== password) {
-      alert("Invalid username or password.");
+    const userData = snapshot.val();
+    if (userData.password !== password) {
+      alert("Invalid password.");
       return;
     }
 
@@ -36,10 +40,9 @@ async function handleLogin() {
 
     await loadBankData();
     await loadProfilePic();
-    updateTotalBalance();
   } catch (error) {
     console.error("Login error:", error);
-    alert("Failed to log in. Please try again.");
+    alert("Login failed. Please try again.");
   }
 }
 
