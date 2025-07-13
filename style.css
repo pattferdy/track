@@ -484,6 +484,21 @@ body.lock-scroll {
   margin-top: 20px;
 }
 
+.delete-bank-button-wrapper {
+  text-align: right;
+  margin: 1rem 0;
+}
+
+.delete-bank-btn-large {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
 .bank-row {
   display: flex;
   justify-content: space-between;
