@@ -123,9 +123,31 @@ document.addEventListener("DOMContentLoaded", async () => {
 function openForm(type) {
   const formPage = document.getElementById('form-page');
   const formBox = formPage.querySelector('.form-box');
+
   document.getElementById('homepage').classList.add('hidden');
   formPage.classList.remove('hidden');
   formPage.dataset.type = type;
+
+  // Clear existing content
+  formBox.innerHTML = '';
+
+  if (type === 'benchmark') {
+    formBox.innerHTML = `
+      <p style="text-align:center; font-weight:bold;">Set current total as benchmark?</p>
+      <button class="form-submit-btn" onclick="setBenchmark()">YES</button>
+      <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
+    `;
+  } else {
+    formBox.innerHTML = `
+      <input type="text" id="detail" placeholder="Detail" class="form-input" />
+      <input type="text" id="amount" placeholder="Amount" class="form-input" />
+      <input type="text" id="bank" placeholder="Bank" class="form-input" />
+      <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
+      <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
+    `;
+  }
+
+  // Show the box with animation
   formBox.classList.remove('visible');
   void formBox.offsetWidth;
   formBox.classList.add('visible');
