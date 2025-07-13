@@ -63,12 +63,22 @@ async function handleLogin() {
 document.addEventListener("DOMContentLoaded", async () => {
   const savedUser = localStorage.getItem('loggedInUser');
   if (savedUser) {
-    currentUser = savedUser;
-    document.getElementById('login-page').classList.add('hidden');
-    document.getElementById('homepage').classList.remove('hidden');
-    await loadBankData();
-    updateTotalBalance();
-    loadProfilePic();
+    try {
+      const userSnap = await get(child(ref(db), `users/${savedUser}/password`));
+      if (userSnap.exists()) {
+        currentUser = savedUser;
+        document.getElementById('login-page').classList.add('hidden');
+        document.getElementById('homepage').classList.remove('hidden');
+        await loadBankData();
+        updateTotalBalance();
+        loadProfilePic();
+      } else {
+        localStorage.removeItem('loggedInUser');
+      }
+    } catch (err) {
+      console.error("Auto-login failed:", err);
+      localStorage.removeItem('loggedInUser');
+    }
   }
 
   const loginBtn = document.querySelector('.btn');
