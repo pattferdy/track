@@ -128,7 +128,6 @@ function openForm(type) {
   formPage.classList.remove('hidden');
   formPage.dataset.type = type;
 
-  // Clear existing content
   formBox.innerHTML = '';
 
   if (type === 'benchmark') {
@@ -145,9 +144,17 @@ function openForm(type) {
       <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
       <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
     `;
+
+    // ✅ Reattach input formatter
+    const amountInput = formBox.querySelector('#amount');
+    amountInput.addEventListener('input', () => {
+      let rawValue = amountInput.value.replace(/,/g, '');
+      if (!isNaN(rawValue) && rawValue !== '') {
+        amountInput.value = parseFloat(rawValue).toLocaleString('en-US');
+      }
+    });
   }
 
-  // Show the box with animation
   formBox.classList.remove('visible');
   void formBox.offsetWidth;
   formBox.classList.add('visible');
