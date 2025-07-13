@@ -132,19 +132,19 @@ function openForm(type) {
   formBox.innerHTML = '';
 
   if (type === 'benchmark') {
-    formBox.innerHTML = 
+    formBox.innerHTML = `  
       <p style="text-align:center; font-weight:bold;">Set current total as benchmark?</p>
       <button class="form-submit-btn" onclick="setBenchmark()">YES</button>
       <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
-    ;
+   `;
   } else {
-    formBox.innerHTML = 
+    formBox.innerHTML = ` 
       <input type="text" id="detail" placeholder="Detail" class="form-input" />
       <input type="text" id="amount" placeholder="Amount" class="form-input" />
       <input type="text" id="bank" placeholder="Bank" class="form-input" />
       <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
       <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
-    ;
+    `;
   }
 
   // Show the box with animation
@@ -221,13 +221,13 @@ async function loadBankData() {
     for (const bank in banks) {
       const item = document.createElement('div');
       item.className = 'bank-item';
-      item.innerHTML = 
+      item.innerHTML = `
         <strong onclick="openBankDetail('${bank}')">${bank}</strong>
         <span class="bank-balance-with-delete">
           ${banks[bank].toLocaleString()}
           <span class="delete-bank-btn" onclick="deleteBank(event, '${bank}')">×</span>
         </span>
-      ;
+      `;
       fragment.appendChild(item);
     }
 
@@ -258,15 +258,15 @@ async function openBankDetail(bankName) {
       const inCol = entry.type === 'income' ? entry.amount.toLocaleString() : '';
       const outCol = entry.type === 'expense' ? entry.amount.toLocaleString() : '';
 
-      row.innerHTML = 
-        <td><em>${entry.detail}</em></td>
-        <td>${inCol}</td>
-        <td>${outCol}</td>
-        <td>
-          ${entry.balance.toLocaleString()}
-          <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
-        </td>
-      ;
+      row.innerHTML = `
+      <td><em>${entry.detail}</em></td>
+      <td>${inCol}</td>
+      <td>${outCol}</td>
+      <td>
+        ${entry.balance.toLocaleString()}
+        <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
+      </td>
+      `;
 
       fragment.appendChild(row);
     });
@@ -318,7 +318,7 @@ async function deleteTransaction(bankName, index) {
 
 async function deleteBank(event, bankName) {
   event.stopPropagation();
-  if (!confirm(Are you sure you want to delete ${bankName}?)) return;
+  if (!confirm(`Are you sure you want to delete ${bankName}?`)) return;
 
   try {
     const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
