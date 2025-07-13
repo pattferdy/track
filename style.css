@@ -38,7 +38,7 @@ body {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .login-box {
@@ -88,14 +88,37 @@ body {
   width: 100%;
 }
 
-/* FORM CONTAINER */
+@keyframes fadeIndown {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -40%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+/* Parent container: make it full screen & center child */
+#form-page {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5); /* Optional dark overlay */
+  z-index: 9999;
+}
+
 .form-box {
-  position: absolute;
+  position: fixed;
+  top: 50%;
+  left: 50%;
   width: 358px;
   height: 387px;
-  left: 50%;
-  top: calc(50% - 103.5px);
-  transform: translateX(-50%);
   background: rgba(2, 18, 25, 0.6);
   box-shadow: inset 3px 4px 10.2px 1px rgba(19, 160, 185, 0.25);
   backdrop-filter: blur(4.4px);
@@ -105,6 +128,31 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
+
+  /* Default: hidden and no animation */
+  opacity: 0;
+  transform: translate(-50%, 10%);
+  pointer-events: none; /* Prevent interaction when hidden */
+  transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  z-index: 10000;
+}
+
+.form-box.visible {
+  opacity: 1;
+  transform: translate(-50%, -50%);
+  pointer-events: auto; /* Enable interaction */
+}
+
+/* Fade out normally (used by submit) */
+.form-box.fade-out {
+  opacity: 0;
+  transform: translate(-50%, -50%);
+}
+
+/* Fade out downward (used by cancel) */
+.form-box.fade-down {
+  opacity: 0;
+  transform: translate(-50%, 20%);
 }
 
 /* SCOPED INPUTS FOR FORM ONLY */
@@ -189,60 +237,78 @@ body {
 
 /* HOMEPAGE BALANCE OVERVIEW */
 .overview {
-  position: relative;
-  width: 369px;
-  height: 100px;
-  margin-top: 40px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;   
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
   background: rgba(6, 36, 49, 0.6);
+  border-radius: 20px;
   box-shadow: inset 3px 4px 10.2px rgba(19, 160, 185, 0.25);
   backdrop-filter: blur(4.4px);
-  border-radius: 20px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-end;
+  width: 369px;
+  margin-top: 40px;
+  flex-direction: column; /* default for desktop: column-centered */
 }
 
-@media (max-width: 768px) {
-  .overview,
-  .action-buttons,
-  .bank-list {
-    margin-top: 20px;
-  }
+/* Profile image styling */
+.profile-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* always align to left */
+  width: 100%;
+  padding-left: 20px; /* optional spacing */
+  margin-bottom: 10px;
+}
+
+.profile-wrapper img {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+/* Balance info */
+.balance-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: center;
+  padding-right: 20px; /* optional spacing */
+  flex: 1;
 }
 
 .balance-label {
-  font-family: var(--font-main);
   font-weight: 900;
   font-size: 15px;
   color: #717171;
-  text-align: right;
-  width: 100%;
-  margin-bottom: 0px; /* 👈 Control spacing between label and number */
 }
 
 #total-balance {
-  top: 50px; 
-  font-family: var(--font-main);
-  font-style: normal;
   font-weight: 900;
   font-size: 25px;
-  line-height: 24px;
   color: #ffffff;
   text-align: right;
 }
 
-/* Ellipse placeholder */
-.overview::before {
-  content: '';
-  position: absolute;
-  width: 70px;
-  height: 70px;
-  background: #000000;
-  border-radius: 50%;
-  top: 85px;
-  left: 20px;
+/* ✅ On mobile: align profile left, balance right */
+@media (max-width: 768px) {
+  .overview {
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .balance-info {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  .profile-wrapper {
+    margin-left: 15px;
+  }
 }
 
 /* MIDDLE ACTION BUTTONS */
@@ -317,12 +383,64 @@ body {
   background-color: rgba(255, 255, 255, 0.05);
 }
 
+.bank-balance-with-delete {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.delete-bank-btn {
+  color: red;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 @media (max-width: 768px) {
   .overview,
   .action-buttons,
   .bank-list {
     margin-top: 20px;
   }
+}
+
+.bank-detail-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.bank-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #0d1d25;
+  padding: 12px 20px;
+  border-radius: 10px;
+}
+
+.bank-row .bank-detail {
+  color: white;
+  font-style: italic;
+  flex: 1;
+}
+
+.bank-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.bank-balance {
+  color: white;
+  font-weight: bold;
+}
+
+.delete-transaction-btn {
+  color: red;
+  font-size: 16px;
+  cursor: pointer;
 }
 
 
@@ -423,4 +541,54 @@ body {
   select {
     font-size: 16px;
   }
+}
+
+.bank-balance-with-delete {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.delete-bank-btn {
+  font-size: 16px;
+  color: red;
+  cursor: pointer;
+  font-weight: bold;
+  background: none;
+  border: none;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.2s;
+}
+
+.delete-bank-btn:hover {
+  transform: scale(1.2);
+}
+
+.delete-row-btn {
+  background: none;
+  border: none;
+  color: #ff4e4e;
+  font-size: 11px;
+  cursor: pointer;
+  margin-left: 8px;
+}
+
+.delete-bank-btn:hover,
+.delete-row-btn:hover {
+  color: #ff0000;
+}
+
+.delete-transaction-btn {
+  margin-left: 10px;
+  background: none;
+  border: none;
+  color: red;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.delete-transaction-btn:hover {
+  color: #ff4d4d;
 }
