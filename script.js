@@ -347,4 +347,5 @@ window.deleteTransaction = deleteTransaction;
 window.deleteBank = deleteBank;
 window.returnToHomepage = returnToHomepage;
 window.logout = logout;
+window.loadProfilePic = loadProfilePic;
 
