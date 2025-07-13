@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         await loadBankData();
         updateTotalBalance();
         loadProfilePic();
+        updateGainDisplay();
       } else {
         localStorage.removeItem('loggedInUser');
       }
@@ -165,6 +166,7 @@ async function submitForm() {
 
     loadBankData();
     updateTotalBalance();
+    updateGainDisplay();
 
     const formPage = document.getElementById('form-page');
     const formBox = formPage.querySelector('.form-box');
@@ -283,6 +285,8 @@ async function deleteTransaction(bankName, index) {
     openBankDetail(bankName);
     loadBankData();
     updateTotalBalance();
+    updateGainDisplay();
+    
   } catch (error) {
     console.error("Delete transaction error:", error);
   }
@@ -307,8 +311,55 @@ async function deleteBank(event, bankName) {
 
     loadBankData();
     updateTotalBalance();
+    updateGainDisplay();
+    
   } catch (error) {
     console.error("Delete bank error:", error);
+  }
+}
+
+async function setBenchmark() {
+  try {
+    const total = calculateCurrentTotal(); // total from bank-list
+    await set(ref(db, `users/${currentUser}/benchmark`), total);
+    closePopup();
+    updateGainDisplay(total); // optional instant update
+    alert("Benchmark set successfully!");
+  } catch (err) {
+    console.error("Benchmark error:", err);
+    alert("Failed to set benchmark.");
+  }
+}
+
+function calculateCurrentTotal() {
+  let total = 0;
+  document.querySelectorAll('.bank-item span').forEach(span => {
+    const numText = span.childNodes[0].textContent.trim().replace(/,/g, '');
+    const value = parseFloat(numText);
+    if (!isNaN(value)) total += value;
+  });
+  return total;
+}
+
+async function updateGainDisplay(overrideBenchmark = null) {
+  try {
+    let benchmark = overrideBenchmark;
+    if (benchmark === null) {
+      const snap = await get(child(ref(db), `users/${currentUser}/benchmark`));
+      if (!snap.exists()) return; // No benchmark set yet
+      benchmark = snap.val();
+    }
+
+    const currentTotal = calculateCurrentTotal();
+    const change = currentTotal - benchmark;
+    const percent = ((change / benchmark) * 100).toFixed(2);
+
+    const gainText = (change >= 0 ? "+" : "") + percent + "%";
+    const gainDisplay = document.getElementById('gain-display');
+    gainDisplay.textContent = gainText;
+    gainDisplay.style.color = change >= 0 ? 'lime' : 'red';
+  } catch (err) {
+    console.error("Gain display error:", err);
   }
 }
 
