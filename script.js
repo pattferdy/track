@@ -19,20 +19,28 @@ let currentUser = null;
 
 async function handleLogin() {
   const username = document.getElementById('login-username').value.trim().toLowerCase();
-  const password = document.getElementById('login-password').value.trim().toLowerCase();
+  const password = document.getElementById('login-password').value.trim();
 
-  const validUsers = { user1: 'pass1', user2: 'pass2' };
-  if (!validUsers[username] || validUsers[username] !== password) {
-    alert("Invalid username or password.");
-    return;
+  try {
+    const snapshot = await firebase.database().ref('users/' + username).once('value');
+    const userData = snapshot.val();
+
+    if (!userData || userData.password !== password) {
+      alert("Invalid username or password.");
+      return;
+    }
+
+    currentUser = username;
+    document.getElementById('login-page').classList.add('hidden');
+    document.getElementById('homepage').classList.remove('hidden');
+
+    await loadBankData();
+    await loadProfilePic();
+    updateTotalBalance();
+  } catch (error) {
+    console.error("Login error:", error);
+    alert("Failed to log in. Please try again.");
   }
-
-  currentUser = username;
-  document.getElementById('login-page').classList.add('hidden');
-  document.getElementById('homepage').classList.remove('hidden');
-
-  await loadBankData();
-  await loadProfilePic();
 }
 
 document.addEventListener("DOMContentLoaded", () => {
