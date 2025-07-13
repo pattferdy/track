@@ -88,30 +88,8 @@
   </table>
   <button class="return-btn" onclick="returnToHomepage()">Return to Homepage</button>
 </div>
-
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
-  import { getDatabase } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
   
-  const firebaseConfig = {
-    apiKey: "AIzaSyB0KEuTX22TijLqgDdeS_kxyrzIZs9kc8E",
-    authDomain: "budgeting-id.firebaseapp.com",
-    projectId: "budgeting-id",
-    storageBucket: "budgeting-id.firebasestorage.app",
-    messagingSenderId: "710126347620",
-    appId: "1:710126347620:web:e2e4f2f5c7a489d6d78671",
-    measurementId: "G-9EXTLK9LCD"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
-
-  // Make db accessible in script.js
-  window.db = db;
-</script>
-  
-  <script src="script.js"></script>
+<script type="module" src="script.js"></script>
   
 </body>
 </html>
