@@ -343,11 +343,21 @@ async function deleteBank(event, bankName) {
 }
 
 async function setBenchmark() {
+  if (!currentUser) {
+    alert("No user is logged in.");
+    return;
+  }
+
   try {
-    const total = calculateCurrentTotal(); // total from bank-list
+    const total = calculateCurrentTotal();
+    if (isNaN(total)) {
+      alert("Unable to calculate total.");
+      return;
+    }
+
     await set(ref(db, `users/${currentUser}/benchmark`), total);
-    closePopup();
-    updateGainDisplay(total); // optional instant update
+    closeForm(); // if you're using formBox instead of popup
+    updateGainDisplay(total);
     alert("Benchmark set successfully!");
   } catch (err) {
     console.error("Benchmark error:", err);
