@@ -416,3 +416,11 @@ body {
 .return-btn:hover {
   background-color: #1B5FA0;
 }
+
+@media (max-width: 480px) {
+  input,
+  textarea,
+  select {
+    font-size: 16px;
+  }
+}
