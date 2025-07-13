@@ -1,4 +1,4 @@
-// ✅ Firebase setup (make sure this is in your HTML too)
+// ✅ Firebase setup
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-analytics.js";
 import { getDatabase, ref, child, get, set } from "https://www.gstatic.com/firebasejs/11.10.0/firebase-database.js";
@@ -17,7 +17,6 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getDatabase(app);
 
-// Make the database available globally
 window.db = db;
 window.get = get;
 window.ref = ref;
@@ -26,12 +25,23 @@ window.set = set;
 
 let currentUser = null;
 
+function loadProfilePic() {
+  if (!currentUser) return;
+  get(child(ref(db), `users/${currentUser}/profilePic`))
+    .then(snap => {
+      if (snap.exists()) {
+        document.getElementById('profile-pic').src = snap.val();
+      }
+    })
+    .catch(err => console.error("Profile pic error:", err));
+}
+
 async function handleLogin() {
   const username = document.getElementById('login-username').value.trim().toLowerCase();
   const password = document.getElementById('login-password').value.trim().toLowerCase();
 
   const overlay = document.getElementById('loading-overlay');
-  overlay.classList.remove('hidden'); // 🟢 Show loader
+  overlay.classList.remove('hidden');
 
   try {
     const userSnap = await get(child(ref(db), `users/${username}/password`));
@@ -41,24 +51,20 @@ async function handleLogin() {
       return;
     }
 
-    // ✅ Login success — set state and load data
     currentUser = username;
     localStorage.setItem('loggedInUser', username);
-
     document.getElementById('login-page').classList.add('hidden');
     document.getElementById('homepage').classList.remove('hidden');
     await loadBankData();
     updateTotalBalance();
     loadProfilePic();
-
   } catch (error) {
     console.error("Login error:", error);
     alert("Error logging in.");
   } finally {
-    overlay.classList.add('hidden'); // 🛑 Hide loader
+    overlay.classList.add('hidden');
   }
 }
-
 
 document.addEventListener("DOMContentLoaded", async () => {
   const savedUser = localStorage.getItem('loggedInUser');
