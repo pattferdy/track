@@ -76,7 +76,6 @@ document.addEventListener("DOMContentLoaded", () => {
       reader.readAsDataURL(file);
     });
   }
-});
 
 async function loadProfilePic() {
   const snapshot = await get(child(ref(db), `users/${currentUser}/profilePic`));
