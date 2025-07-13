@@ -244,16 +244,19 @@ async function openBankDetail(bankName) {
   document.getElementById('bank-detail-page').classList.remove('hidden');
   document.getElementById('bank-name').textContent = bankName;
 
-  get(child(ref(db), `users/${currentUser}/history/${bankName}`)).then(historySnap => {
+  try {
+    const historySnap = await get(child(ref(db), `users/${currentUser}/history/${bankName}`));
     const entries = historySnap.exists() ? historySnap.val() : [];
     const tbody = document.getElementById('bank-detail-body');
     tbody.innerHTML = '';
 
     const fragment = document.createDocumentFragment();
+
     entries.forEach((entry, index) => {
       const row = document.createElement('tr');
       const inCol = entry.type === 'income' ? entry.amount.toLocaleString() : '';
       const outCol = entry.type === 'expense' ? entry.amount.toLocaleString() : '';
+
       row.innerHTML = `
         <td><em>${entry.detail}</em></td>
         <td>${inCol}</td>
@@ -262,9 +265,21 @@ async function openBankDetail(bankName) {
           ${entry.balance.toLocaleString()}
           <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
         </td>
-    `;
+      `;
+
       fragment.appendChild(row);
     });
+
+    tbody.appendChild(fragment);
+
+    // Set the total balance text
+    document.getElementById('bank-total').textContent =
+      entries.length > 0
+        ? entries[entries.length - 1].balance.toLocaleString()
+        : '0';
+  } catch (error) {
+    console.error("Bank detail error:", error);
+  }
 }
 
 async function deleteTransaction(bankName, index) {
