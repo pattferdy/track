@@ -113,7 +113,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       reader.onload = function (e) {
         const base64Image = e.target.result;
         document.getElementById('profile-pic').src = base64Image;
-        set(ref(db, users/${currentUser}/profilePic), base64Image);
+        set(ref(db, `users/${currentUser}/profilePic`), base64Image);
       };
       reader.readAsDataURL(file);
     });
@@ -185,8 +185,8 @@ async function submitForm() {
     banks[bank] = type === 'income' ? banks[bank] + amount : banks[bank] - amount;
     history[bank].push({ detail, type, amount, balance: banks[bank] });
 
-    await set(ref(db, users/${currentUser}/banks), banks);
-    await set(ref(db, users/${currentUser}/history), history);
+    await set(ref(db, `users/${currentUser}/banks`), banks);
+    await set(ref(db, `users/${currentUser}/history`), history);
 
     loadBankData();
     updateTotalBalance();
@@ -303,8 +303,8 @@ async function deleteTransaction(bankName, index) {
     const banks = await get(child(ref(db), `users/${currentUser}/banks`)).then(snap => snap.val() || {});
     banks[bankName] = balance;
 
-    await set(ref(db, users/${currentUser}/history), history);
-    await set(ref(db, users/${currentUser}/banks), banks);
+    await set(ref(db, `users/${currentUser}/history`), history);
+    await set(ref(db, `users/${currentUser}/banks`), banks);
 
     openBankDetail(bankName);
     loadBankData();
@@ -330,8 +330,8 @@ async function deleteBank(event, bankName) {
     delete banks[bankName];
     delete history[bankName];
 
-    await set(ref(db, users/${currentUser}/banks), banks);
-    await set(ref(db, users/${currentUser}/history), history);
+    await set(ref(db, `users/${currentUser}/banks`), banks);
+    await set(ref(db, `users/${currentUser}/history`), history);
 
     loadBankData();
     updateTotalBalance();
@@ -345,7 +345,7 @@ async function deleteBank(event, bankName) {
 async function setBenchmark() {
   try {
     const total = calculateCurrentTotal(); // total from bank-list
-    await set(ref(db, users/${currentUser}/benchmark), total);
+    await set(ref(db, `users/${currentUser}/benchmark`), total);
     closePopup();
     updateGainDisplay(total); // optional instant update
     alert("Benchmark set successfully!");
