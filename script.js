@@ -160,6 +160,9 @@ async function loadBankData() {
     const banks = bankSnap.exists() ? bankSnap.val() : {};
     const list = document.getElementById('bank-list');
     list.innerHTML = '';
+
+    const fragment = document.createDocumentFragment();
+
     for (const bank in banks) {
       const item = document.createElement('div');
       item.className = 'bank-item';
@@ -170,8 +173,10 @@ async function loadBankData() {
           <span class="delete-bank-btn" onclick="deleteBank(event, '${bank}')">×</span>
         </span>
       `;
-      list.appendChild(item);
+      fragment.appendChild(item);
     }
+
+    list.appendChild(fragment);
     updateTotalBalance();
   } catch (error) {
     console.error("Load bank error:", error);
@@ -190,6 +195,9 @@ async function openBankDetail(bankName) {
     const tbody = document.getElementById('bank-detail-body');
     tbody.innerHTML = '';
 
+    // 🧠 Use a DocumentFragment for better performance
+    const fragment = document.createDocumentFragment();
+
     entries.forEach((entry, index) => {
       const row = document.createElement('tr');
       const inCol = entry.type === 'income' ? entry.amount.toLocaleString() : '';
@@ -204,12 +212,18 @@ async function openBankDetail(bankName) {
           <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
         </td>
       `;
-      tbody.appendChild(row);
+
+      fragment.appendChild(row);
     });
 
-    document.getElementById('bank-total').textContent = entries.length > 0
-      ? entries[entries.length - 1].balance.toLocaleString()
-      : '0';
+    // 🧩 Append all rows in one go = fewer reflows
+    tbody.appendChild(fragment);
+
+    // Update the displayed total
+    document.getElementById('bank-total').textContent =
+      entries.length > 0
+        ? entries[entries.length - 1].balance.toLocaleString()
+        : '0';
   } catch (error) {
     console.error("Bank detail error:", error);
   }
