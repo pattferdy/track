@@ -10,7 +10,6 @@ const firebaseConfig = {
     messagingSenderId: "710126347620",
     appId: "1:710126347620:web:e2e4f2f5c7a489d6d78671",
     measurementId: "G-9EXTLK9LCD"
-    databaseURL: "https://budgeting-id-default-rtdb.firebaseio.com/"
   };
 
 const app = initializeApp(firebaseConfig);
