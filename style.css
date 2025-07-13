@@ -23,6 +23,13 @@ body {
   z-index: 1; /* base level */
 }
 
+@media (max-width: 768px) {
+  #homepage {
+    justify-content: flex-start; /* align to top */
+    padding-top: 40px; /* add space from top if needed */
+  }
+}
+
 .page:not(.hidden) {
   display: flex;
   flex-direction: column;
@@ -197,6 +204,14 @@ body {
   align-items: flex-end;
 }
 
+@media (max-width: 768px) {
+  .overview,
+  .action-buttons,
+  .bank-list {
+    margin-top: 20px;
+  }
+}
+
 .balance-label {
   font-family: var(--font-main);
   font-weight: 900;
@@ -301,6 +316,15 @@ body {
 .bank-item:hover {
   background-color: rgba(255, 255, 255, 0.05);
 }
+
+@media (max-width: 768px) {
+  .overview,
+  .action-buttons,
+  .bank-list {
+    margin-top: 20px;
+  }
+}
+
 
 /* Bank Detail Page */
 .bank-detail-page {
