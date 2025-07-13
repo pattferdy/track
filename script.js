@@ -328,6 +328,14 @@ function updateTotalBalance() {
   document.getElementById('total-balance').textContent = total.toLocaleString();
 }
 
+function confirmBenchmarkPopup() {
+  document.getElementById('benchmark-popup').classList.remove('hidden');
+}
+
+function closePopup() {
+  document.getElementById('benchmark-popup').classList.add('hidden');
+}
+
 function logout() {
   localStorage.removeItem('loggedInUser');
   currentUser = null;
