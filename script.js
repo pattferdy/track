@@ -79,6 +79,17 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
   }
 
+  function logout() {
+  localStorage.removeItem('loggedInUser');
+  currentUser = null;
+
+  // Reset UI state
+  document.getElementById('homepage').classList.add('hidden');
+  document.getElementById('form-page').classList.add('hidden');
+  document.getElementById('bank-detail-page').classList.add('hidden');
+  document.getElementById('login-page').classList.remove('hidden');
+}
+
   const profileInput = document.getElementById('profile-upload');
   if (profileInput) {
     profileInput.addEventListener('change', function () {
