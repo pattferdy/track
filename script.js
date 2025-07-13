@@ -47,6 +47,7 @@ async function handleLogin() {
     const userSnap = await get(child(ref(db), `users/${username}/password`));
 
     if (!userSnap.exists() || userSnap.val() !== password) {
+      overlay.classList.add('hidden');
       alert("Invalid username or password.");
       return;
     }
@@ -58,6 +59,7 @@ async function handleLogin() {
     await loadBankData();
     updateTotalBalance();
     loadProfilePic();
+    updateGainDisplay();
   } catch (error) {
     console.error("Login error:", error);
     alert("Error logging in.");
@@ -407,4 +409,7 @@ window.deleteBank = deleteBank;
 window.returnToHomepage = returnToHomepage;
 window.logout = logout;
 window.loadProfilePic = loadProfilePic;
+window.setBenchmark = setBenchmark;
+window.closePopup = closePopup;
+window.openBenchmarkPopup = confirmBenchmarkPopup;
 
