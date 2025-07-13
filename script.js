@@ -128,7 +128,6 @@ function openForm(type) {
   formPage.classList.remove('hidden');
   formPage.dataset.type = type;
 
-  // Clear existing content
   formBox.innerHTML = '';
 
   if (type === 'benchmark') {
@@ -147,7 +146,6 @@ function openForm(type) {
     `;
   }
 
-  // Show the box with animation
   formBox.classList.remove('visible');
   void formBox.offsetWidth;
   formBox.classList.add('visible');
@@ -404,13 +402,10 @@ function updateTotalBalance() {
 }
 
 function confirmBenchmarkPopup() {
-  document.getElementById('benchmark-popup').classList.remove('hidden');
-  document.body.classList.add('lock-scroll');
-}
+  openForm('benchmark');
 
 function closePopup() {
-  document.getElementById('benchmark-popup').classList.add('hidden');
-  document.body.classList.remove('lock-scroll');
+  closeForm();
 }
 
 function logout() {
@@ -436,4 +431,5 @@ window.loadProfilePic = loadProfilePic;
 window.setBenchmark = setBenchmark;
 window.closePopup = closePopup;
 window.openBenchmarkPopup = confirmBenchmarkPopup;
+
 
