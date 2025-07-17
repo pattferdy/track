@@ -192,14 +192,14 @@ body.lock-scroll {
   border-radius: 5px;
   color: white;
   font-family: 'Inter', sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   text-align: center;
 }
 
 .form-input::placeholder {
   color: white;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
   text-align: center;
 }
@@ -271,7 +271,7 @@ body.lock-scroll {
   color: #e74c3c;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: bold;
   transition: all 0.2s ease;
 }
@@ -383,7 +383,7 @@ body.lock-scroll {
   color: #ffffff;
   font-family: var(--font-main);
   font-weight: 900;
-  font-size: 8px;
+  font-size: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -399,7 +399,7 @@ body.lock-scroll {
 }
 
 .btn-label {
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
 }
 
@@ -441,7 +441,7 @@ body.lock-scroll {
 .bank-item {
   display: flex;
   justify-content: space-between;
-  font-size: 8px;
+  font-size: 12px;
   font-weight: 900;
   font-family: var(--font-main);
   color: white;
@@ -465,7 +465,7 @@ body.lock-scroll {
 .delete-bank-btn {
   color: red;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -512,7 +512,7 @@ body.lock-scroll {
 
 .delete-transaction-btn {
   color: red;
-  font-size: 16px;
+  font-size: 12px;
   cursor: pointer;
 }
 
@@ -544,7 +544,7 @@ body.lock-scroll {
 
 .bank-detail-header .label {
   font-weight: 900;
-  font-size: 11px;
+  font-size: 12px;
   color: #5B5B5B;
   margin-bottom: 2px;
 }
@@ -643,7 +643,7 @@ body.lock-scroll {
   background: none;
   border: none;
   color: #ff4e4e;
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
   margin-left: 8px;
 }
@@ -658,7 +658,7 @@ body.lock-scroll {
   background: none;
   border: none;
   color: red;
-  font-size: 11px;
+  font-size: 12px;
   cursor: pointer;
 }
 
