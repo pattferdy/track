@@ -42,8 +42,14 @@
 body {
   margin: 0;
   font-family: var(--font-main);
-  background: #04151f;
+  background: url('Untitled-1.webp');
   color: var(--text-color);
+}
+
+@media (max-width: 768px) {
+  body {
+    background-image: url('ada.webp');
+  }
 }
 
 body.lock-scroll {
