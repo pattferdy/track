@@ -49,6 +49,10 @@ body {
 @media (max-width: 768px) {
   body {
     background-image: url('ada.webp');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+}
   }
 }
 
