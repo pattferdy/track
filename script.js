@@ -149,6 +149,26 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
+async function populateBankOptions() {
+  const datalist = document.getElementById("bank-options");
+  if (!datalist) return;
+  datalist.innerHTML = "";
+
+  try {
+    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
+    if (bankSnap.exists()) {
+      const banks = Object.keys(bankSnap.val());
+      banks.forEach(bank => {
+        const option = document.createElement("option");
+        option.value = bank;
+        datalist.appendChild(option);
+      });
+    }
+  } catch (err) {
+    console.error("populateBankOptions error:", err);
+  }
+}
+
 function openForm(type) {
   const formPage = document.getElementById('form-page');
   const formBox = formPage.querySelector('.form-box');
@@ -164,12 +184,13 @@ function openForm(type) {
       <p style="text-align:center; font-weight:bold;">Set current total as benchmark?</p>
       <button class="form-submit-btn" onclick="setBenchmark()">YES</button>
       <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
-   `;
+    `;
   } else {
     formBox.innerHTML = ` 
       <input type="text" id="detail" placeholder="Detail" class="form-input" />
       <input type="text" id="amount" placeholder="Amount" class="form-input" />
-      <input type="text" id="bank" placeholder="Bank" class="form-input" />
+      <input list="bank-options" id="bank" placeholder="Bank" class="form-input" />
+      <datalist id="bank-options"></datalist>
       <button class="form-submit-btn" onclick="submitForm()">SUBMIT</button>
       <button class="form-exit-btn" onclick="closeForm()">CANCEL</button>
     `;
@@ -182,6 +203,9 @@ function openForm(type) {
         amountInput.value = parseFloat(rawValue).toLocaleString('en-US');
       }
     });
+
+    // ✅ Populate dropdown options
+    populateBankOptions();
   }
 
   formBox.classList.remove('visible');
@@ -480,4 +504,5 @@ window.loadProfilePic = loadProfilePic;
 window.setBenchmark = setBenchmark;
 window.closePopup = closePopup;
 window.openBenchmarkPopup = confirmBenchmarkPopup;
+
 
