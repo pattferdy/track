@@ -149,26 +149,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   }
 });
 
-async function populateBankOptions() {
-  const datalist = document.getElementById("bank-options");
-  if (!datalist) return;
-  datalist.innerHTML = "";
-
-  try {
-    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
-    if (bankSnap.exists()) {
-      const banks = Object.keys(bankSnap.val());
-      banks.forEach(bank => {
-        const option = document.createElement("option");
-        option.value = bank;
-        datalist.appendChild(option);
-      });
-    }
-  } catch (err) {
-    console.error("populateBankOptions error:", err);
-  }
-}
-
 function openForm(type) {
   const formPage = document.getElementById('form-page');
   const formBox = formPage.querySelector('.form-box');
@@ -504,5 +484,6 @@ window.loadProfilePic = loadProfilePic;
 window.setBenchmark = setBenchmark;
 window.closePopup = closePopup;
 window.openBenchmarkPopup = confirmBenchmarkPopup;
+
 
 
