@@ -578,6 +578,12 @@ body.lock-scroll {
   font-size: 11px;
 }
 
+.bank-detail-table th:first-child,
+.bank-detail-table td:first-child {
+  width: 100px;
+  text-align: center;
+}
+
 .bank-detail-table thead {
   background: #083640;
   padding: 0 160px; 
@@ -721,3 +727,4 @@ body.lock-scroll {
 #benchmark-confirm .form-exit-btn:hover {
   background: #c82333;
 }
+
