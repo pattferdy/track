@@ -25,6 +25,26 @@ window.set = set;
 
 let currentUser = null;
 
+async function populateBankOptions() {
+  const datalist = document.getElementById("bank-options");
+  if (!datalist) return;
+  datalist.innerHTML = "";
+
+  try {
+    const bankSnap = await get(child(ref(db), `users/${currentUser}/banks`));
+    if (bankSnap.exists()) {
+      const banks = Object.keys(bankSnap.val());
+      banks.forEach(bank => {
+        const option = document.createElement("option");
+        option.value = bank;
+        datalist.appendChild(option);
+      });
+    }
+  } catch (err) {
+    console.error("populateBankOptions error:", err);
+  }
+}
+
 function loadProfilePic() {
   if (!currentUser) return;
   get(child(ref(db), `users/${currentUser}/profilePic`))
@@ -67,6 +87,15 @@ async function handleLogin() {
     overlay.classList.add('hidden');
   }
 }
+
+// Patch openForm to include dropdown population
+const originalOpenForm = openForm;
+openForm = function(type) {
+  originalOpenForm(type);
+  if (type === 'income' || type === 'expense') {
+    populateBankOptions();
+  }
+};
 
 document.addEventListener("DOMContentLoaded", async () => {
   const savedUser = localStorage.getItem('loggedInUser');
@@ -451,3 +480,4 @@ window.loadProfilePic = loadProfilePic;
 window.setBenchmark = setBenchmark;
 window.closePopup = closePopup;
 window.openBenchmarkPopup = confirmBenchmarkPopup;
+
