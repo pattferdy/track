@@ -223,7 +223,8 @@ async function submitForm() {
     if (!history[bank]) history[bank] = [];
 
     banks[bank] = type === 'income' ? banks[bank] + amount : banks[bank] - amount;
-    history[bank].push({ detail, type, amount, balance: banks[bank] });
+    const timestamp = new Date().toISOString();
+    history[bank].push({ detail, type, amount, balance: banks[bank], date: timestamp });
 
     await set(ref(db, `users/${currentUser}/banks`), banks);
     await set(ref(db, `users/${currentUser}/history`), history);
@@ -296,16 +297,18 @@ async function openBankDetail(bankName) {
       const row = document.createElement('tr');
       const inCol = entry.type === 'income' ? entry.amount.toLocaleString() : '';
       const outCol = entry.type === 'expense' ? entry.amount.toLocaleString() : '';
+      const dateStr = entry.date ? new Date(entry.date).toLocaleDateString() : '-';
 
-      row.innerHTML = `
+    row.innerHTML = `
+        <td>${dateStr}</td>
         <td><em>${entry.detail}</em></td>
         <td>${inCol}</td>
         <td>${outCol}</td>
         <td>
-          ${entry.balance.toLocaleString()}
-          <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
-        </td>
-      `;
+        ${entry.balance.toLocaleString()}
+        <button onclick="deleteTransaction('${bankName}', ${index})" class="delete-transaction-btn">✖</button>
+      </td>
+    `;
 
       fragment.appendChild(row);
     });
@@ -484,6 +487,7 @@ window.loadProfilePic = loadProfilePic;
 window.setBenchmark = setBenchmark;
 window.closePopup = closePopup;
 window.openBenchmarkPopup = confirmBenchmarkPopup;
+
 
 
 
