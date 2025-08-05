@@ -567,35 +567,42 @@ body.lock-scroll {
 
 .bank-detail-table {
   width: 100%;
+  max-width: 100%;
   border-collapse: collapse;
+  table-layout: fixed; /* Makes columns behave evenly */
   margin-top: 10px;
 }
 
 .bank-detail-table th,
 .bank-detail-table td {
   text-align: center;
+  vertical-align: middle;
   padding: 10px;
   font-size: 11px;
-}
-
-.bank-detail-table th:first-child,
-.bank-detail-table td:first-child {
-  width: 100px;
-  text-align: center;
+  word-wrap: break-word;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .bank-detail-table thead {
   background: #083640;
-  padding: 0 160px; 
   color: white;
 }
 
 .bank-detail-table tbody tr {
   background: rgba(19, 160, 185, 0.1);
-  border-radius: 10px;
 }
 
-.bank-detail-table tbody tr td:first-child {
+/* DATE column (1st column) — center aligned */
+.bank-detail-table tbody tr td:first-child,
+.bank-detail-table thead tr th:first-child {
+  font-style: normal;
+  text-align: center;
+  width: 100px;
+}
+
+/* DETAIL column (2nd column) — italic left-aligned */
+.bank-detail-table tbody tr td:nth-child(2) {
   font-style: italic;
   text-align: left;
 }
@@ -727,4 +734,5 @@ body.lock-scroll {
 #benchmark-confirm .form-exit-btn:hover {
   background: #c82333;
 }
+
 
